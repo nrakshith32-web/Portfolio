@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rakshith N — CS Engineering Student & Builder</title>
+<meta name="description" content="I'm Rakshith N, a Computer Science Engineering student at BMSCE, building at the intersection of software, AI/ML, and applied research. Currently seeking internships in AI/ML, software development, and research.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{
+  --bg:#080B14;
+  --bg-2:#0D1220;
+  --bg-3:#111832;
+  --panel:rgba(255,255,255,0.035);
+  --panel-border:rgba(255,255,255,0.08);
+  --text:#E9EBF6;
+  --text-dim:#9BA3C4;
+  --text-faint:#5C6488;
+  --accent:#8B93FF;
+  --accent-2:#5EEAD4;
+  --accent-dim:rgba(139,147,255,0.14);
+}
+[data-theme="light"]{
+  --bg:#F6F7FB;
+  --bg-2:#FFFFFF;
+  --bg-3:#EEF0FA;
+  --panel:rgba(20,25,50,0.03);
+  --panel-border:rgba(20,25,50,0.08);
+  --text:#12162A;
+  --text-dim:#4A5178;
+  --text-faint:#8A90B0;
+  --accent:#5257D6;
+  --accent-2:#0FA98D;
+  --accent-dim:rgba(82,87,214,0.10);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  transition:background .4s ease, color .4s ease;
+  overflow-x:hidden;
+}
+.font-display{font-family:'Space Grotesk',sans-serif;}
+.font-mono{font-family:'JetBrains Mono',monospace;}
+::selection{background:var(--accent);color:#080B14;}
+
+/* scrollbar */
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--panel-border);border-radius:8px;}
+
+/* glass panel */
+.glass{
+  background:var(--panel);
+  border:1px solid var(--panel-border);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+}
+.glass-hover{transition:transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s ease, background .35s ease;}
+.glass-hover:hover{transform:translateY(-4px);border-color:rgba(139,147,255,0.35);}
+
+/* gradient text */
+.grad-text{
+  background:linear-gradient(120deg, var(--accent), var(--accent-2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+/* buttons */
+.btn-primary{
+  background:linear-gradient(120deg,var(--accent),var(--accent-2));
+  color:#080B14;
+  font-weight:600;
+  transition:filter .3s ease, transform .3s ease;
+}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-2px);}
+.btn-ghost{
+  border:1px solid var(--panel-border);
+  color:var(--text);
+  transition:all .3s ease;
+}
+.btn-ghost:hover{border-color:var(--accent);background:var(--accent-dim);transform:translateY(-2px);}
+
+/* section reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* nav link underline */
+.nav-link{position:relative;}
+.nav-link::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:1px;background:var(--accent);transition:width .3s ease;}
+.nav-link:hover::after{width:100%;}
+.nav-link.active{color:var(--text);}
+.nav-link.active::after{width:100%;}
+
+/* skill bar */
+.skill-bar-track{background:var(--bg-3);border-radius:99px;overflow:hidden;height:6px;}
+.skill-bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0;transition:width 1.4s cubic-bezier(.2,.8,.2,1);}
+
+/* badge */
+.badge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;
+  letter-spacing:.03em;
+  padding:3px 10px;
+  border-radius:99px;
+  border:1px solid var(--panel-border);
+  color:var(--text-dim);
+  background:var(--panel);
+}
+
+/* status pulse */
+.pulse-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--accent-2);
+  box-shadow:0 0 0 0 rgba(94,234,212,.6);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(94,234,212,.5);}
+  70%{box-shadow:0 0 0 8px rgba(94,234,212,0);}
+  100%{box-shadow:0 0 0 0 rgba(94,234,212,0);}
+}
+
+/* timeline line */
+.timeline-line{background:linear-gradient(180deg, var(--accent) 0%, var(--panel-border) 100%);}
+.timeline-node{
+  width:12px;height:12px;border-radius:50%;
+  background:var(--bg);
+  border:2px solid var(--accent);
+  box-shadow:0 0 0 4px var(--accent-dim);
+}
+
+/* cursor glow (desktop only) */
+#cursor-glow{
+  position:fixed;top:0;left:0;width:420px;height:420px;
+  border-radius:50%;
+  background:radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+  pointer-events:none;z-index:0;
+  transform:translate(-50%,-50%);
+  transition:opacity .3s ease;
+  opacity:0;
+}
+@media (hover:hover) and (pointer:fine){#cursor-glow{opacity:1;}}
+
+/* scroll progress */
+#scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));z-index:100;width:0%;}
+
+/* project filter button active */
+.filter-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--text);}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important;}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor-glow"></div>
+<div id="scroll-progress"></div>
+
+<!-- Canvas constellation background -->
+<canvas id="constellation" class="fixed inset-0 w-full h-full pointer-events-none" style="z-index:0;opacity:0.55;"></canvas>
+
+<!-- NAV -->
+<header class="fixed top-0 left-0 right-0 z-50">
+  <nav class="glass mx-auto mt-4 max-w-6xl rounded-2xl px-5 py-3 flex items-center justify-between" style="backdrop-filter:blur(24px);">
+    <a href="#home" class="font-display font-semibold text-lg tracking-tight">RN<span class="grad-text">.</span></a>
+    <div class="hidden md:flex items-center gap-7 text-sm text-[var(--text-dim)]">
+      <a href="#about" data-nav="about" class="nav-link hover:text-[var(--text)]">About</a>
+      <a href="#education" data-nav="education" class="nav-link hover:text-[var(--text)]">Education</a>
+      <a href="#research" data-nav="research" class="nav-link hover:text-[var(--text)]">Research</a>
+      <a href="#skills" data-nav="skills" class="nav-link hover:text-[var(--text)]">Skills</a>
+      <a href="#projects" data-nav="projects" class="nav-link hover:text-[var(--text)]">Projects</a>
+      <a href="#experience" data-nav="experience" class="nav-link hover:text-[var(--text)]">Experience</a>
+      <a href="#references" data-nav="references" class="nav-link hover:text-[var(--text)]">References</a>
+      <a href="#contact" data-nav="contact" class="nav-link hover:text-[var(--text)]">Contact</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="theme-toggle" aria-label="Toggle theme" class="glass w-9 h-9 rounded-full flex items-center justify-center hover:border-[var(--accent)] transition-colors">
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+      <button id="mobile-menu-btn" class="md:hidden glass w-9 h-9 rounded-full flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div id="mobile-menu" class="hidden md:hidden glass mx-4 mt-2 rounded-2xl p-4 flex flex-col gap-3 text-sm text-[var(--text-dim)]">
+    <a href="#about" class="mobile-link">About</a>
+    <a href="#education" class="mobile-link">Education</a>
+    <a href="#research" class="mobile-link">Research</a>
+    <a href="#skills" class="mobile-link">Skills</a>
+    <a href="#projects" class="mobile-link">Projects</a>
+    <a href="#experience" class="mobile-link">Experience</a>
+    <a href="#references" class="mobile-link">References</a>
+    <a href="#contact" class="mobile-link">Contact</a>
+  </div>
+</header>
+
+<main class="relative" style="z-index:1;">
+
+<!-- HERO -->
+<section id="home" class="min-h-screen flex items-center px-6 pt-32 pb-20 max-w-6xl mx-auto">
+  <div class="w-full">
+    <div class="reveal flex items-center gap-2 mb-6">
+      <span class="pulse-dot"></span>
+      <span class="badge">CURRENTLY LOOKING FOR INTERNSHIP — AI/ML · SOFTWARE · RESEARCH</span>
+    </div>
+
+    <div class="reveal flex flex-col md:flex-row md:items-center gap-8 mb-8">
+      <div class="w-24 h-24 md:w-28 md:h-28 rounded-2xl glass flex items-center justify-center font-display text-3xl font-semibold shrink-0" style="background:linear-gradient(135deg, var(--accent-dim), transparent);">
+        RN
+      </div>
+      <div>
+        <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
+          Rakshith N
+        </h1>
+        <p class="mt-3 text-lg sm:text-xl text-[var(--text-dim)] font-mono">
+          <span id="typing-text"></span><span class="inline-block w-[2px] h-5 bg-[var(--accent)] align-middle animate-pulse ml-1"></span>
+        </p>
+      </div>
+    </div>
+
+    <p class="reveal max-w-2xl text-[var(--text-dim)] text-base sm:text-lg leading-relaxed mb-10">
+      I'm a Computer Science Engineering student at BMSCE, building at the intersection of
+      software, AI/ML, and applied research — actively pursuing summer research opportunities
+      in machine learning, computational physics, and medical AI/computer vision.
+    </p>
+
+    <div class="reveal flex flex-wrap gap-4">
+      <a href="Resume_Rakshith.pdf" download class="btn-primary px-6 py-3 rounded-xl text-sm inline-flex items-center gap-2">
+        Resume
+      </a>
+      <a href="https://github.com/nrakshith32-web" target="_blank" rel="noopener" class="btn-ghost px-6 py-3 rounded-xl text-sm inline-flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5 3.3 9.3 7.9 10.8.6.1.8-.3.8-.6v-2.1c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.4 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2A11.3 11.3 0 0 1 12 5.8c1 0 2.1.1 3 .4 2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12c0-6.3-5.2-11.5-11.5-11.5z"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/rakshith-n-437435403" target="_blank" rel="noopener" class="btn-ghost px-6 py-3 rounded-xl text-sm inline-flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2 2 0 1 1 0-4.1 2 2 0 0 1 0 4.1zM7 20.4H3.6V9H7v11.4z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:nrakshith32@gmail.com" class="btn-ghost px-6 py-3 rounded-xl text-sm inline-flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6l-10 7L2 6"/><path d="M2 6h20v12H2z"/></svg>
+        Email
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="px-6 py-24 max-w-6xl mx-auto">
+  <div class="reveal mb-12">
+    <span class="badge">ABOUT</span>
+    <h2 class="font-display text-3xl sm:text-4xl font-semibold mt-4 tracking-tight">Still exploring, always building</h2>
+  </div>
+  <div class="grid md:grid-cols-3 gap-10">
+    <div class="md:col-span-2 reveal">
+      <p class="text-[var(--text-dim)] text-lg leading-relaxed mb-5">
+        I'm a first-year CS Engineering student at BMSCE with a 9.4 SGPA in Semester 1 and 9.35 in Semester 2, and
+        I like being around people almost
+        as much as I like solving problems — I work well in teams, communicate clearly, and I'm usually the one
+        happy to help a teammate work through something tricky. Meditation keeps me steady, and I try to stay
+        consistent rather than intense.
+      </p>
+      <p class="text-[var(--text-dim)] text-lg leading-relaxed mb-5">
+        I'm still figuring out exactly where I want to land — somewhere across software engineering, AI/ML, and
+        applied research — but the thread that ties it together is clear to me: I want to build things that
+        matter, driven as much by impact and service to others as by the engineering itself.
+      </p>
+      <p class="text-[var(--text-dim)] text-lg leading-relaxed">
+        Outside of code, I run, trek, practice yoga, read non-fiction, and journal when the week calls for it —
+        habits that keep me calm, consistent, and patient with hard problems.
+      </p>
+    </div>
+    <div class="reveal grid grid-cols-2 gap-4 content-start">
+      <div class="glass glass-hover rounded-2xl p-4 text-center">
+        <div class="font-display text-2xl font-semibold grad-text">9.35</div>
+        <div class="text-xs text-[var(--text-faint)] mt-1 font-mono">SGPA · SEM 2</div>
+      </div>
+      <div class="glass glass-hover rounded-2xl p-4 text-center">
+        <div class="font-display text-2xl font-semibold grad-text">4</div>
+        <div class="text-xs text-[var(--text-faint)] mt-1 font-mono">PROJECTS SHIPPED</div>
+      </div>
+      <div class="glass glass-hover rounded-2xl p-4 text-center">
+        <div class="font-display text-2xl font-semibold grad-text">3rd</div>
+        <div class="text-xs text-[var(--text-faint)] mt-1 font-mono">SHECODES HACKATHON</div>
+      </div>
+      <div class="glass glass-hover rounded-2xl p-4 text-center">
+        <div class="font-display text-2xl font-semibold grad-text">2029</div>
+        <div class="text-xs text-[var(--text-faint)] mt-1 font-mono">EXPECTED GRAD</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="px-6 py-24 max-w-6xl mx-auto">
+  <div class="reveal mb-14">
+    <span class="badge">EDUCATION</span>
+    <h2 class="font-display text-3xl sm:text-4xl font-semibold mt-4 tracking-tight">Academic timeline</h2>
+  </div>
+  <div class="relative pl-8">
+    <div class="timeline-line absolute left-[5px] top-2 bottom-2 w-[2px]"></div>
+
+    <div class="reveal relative mb-12">
+      <div class="timeline-node absolute -left-8 top-1.5"></div>
+      <div class="glass glass-hover rounded-2xl p-6">
+        <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+          <h3 class="font-display text-xl font-semibold">BMS College of Engineering</h3>
+          <span class="badge">2025 — 2029</span>
+        </div>
+        <p class="text-[var(--text-dim)] mb-4">B.E., Computer Science Engineering · 1st Year, 2nd Semester</p>
+        <div class="flex flex-wrap gap-3 mb-4">
+          <div class="glass rounded-lg px-3 py-1.5 text-sm font-mono text-[var(--accent-2)]">SGPA: 9.35 (Sem 2)</div>
+          <div class="glass rounded-lg px-3 py-1.5 text-sm font-mono text-[var(--accent-2)]">SGPA: 9.4 (Sem 1)</div>
+        </div>
+        <p class="text-sm text-[var(--text-faint)] mb-2 font-mono">RELEVANT COURSEWORK</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="badge">Structured Programming in C</span>
+          <span class="badge">Quantum Physics & Computation for CSE</span>
+          <span class="badge">Intro to AI and Applications</span>
+          <span class="badge">Intro to Python Programming</span>
+          <span class="badge">HTML (self-taught)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal relative mb-12">
+      <div class="timeline-node absolute -left-8 top-1.5" style="border-color:var(--panel-border);box-shadow:none;"></div>
+      <div class="glass glass-hover rounded-2xl p-5">
+        <div class="flex flex-wrap items-baseline justify-between gap-2">
+          <h3 class="font-display text-base font-semibold">Orchids The International School</h3>
+          <span class="badge">Class 12 · CBSE</span>
+        </div>
+        <p class="text-[var(--text-faint)] text-sm mt-1">90.2%</p>
+      </div>
+    </div>
+
+    <div class="reveal relative">
+      <div class="timeline-node absolute -left-8 top-1.5" style="border-color:var(--panel-border);box-shadow:none;"></div>
+      <div class="glass glass-hover rounded-2xl p-5">
+        <div class="flex flex-wrap items-baseline justify-between gap-2">
+          <h3 class="font-display text-base font-semibold">Baldwin Co-Education Extension High School</h3>
+          <span class="badge">Class 10 · ICSE</span>
+        </div>
+        <p class="text-[var(--text-faint)] text-sm mt-1">96.6%</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research" class="px-6 py-24 max-w-6xl mx-auto">
+  <div class="reveal glass rounded-3xl p-8 md:p-12" style="background:linear-gradient(135deg, var(--accent-dim), transparent 60%);">
+    <span class="badge">RESEARCH INTERESTS</span>
+    <h2 class="font-display text-3xl sm:text-4xl font-semibold mt-4 mb-6 tracking-tight">Where code meets the physical world</h2>
+    <p class="text-[var(--text-dim)] text-lg leading-relaxed max-w-3xl mb-8">
+      I sit at the intersection of core computer science and the physical sciences, and I'd rather work on
+      research that's both scientifically interesting and useful in the real world — machine learning applied
+      to problems like weather prediction, climate modeling, and scientific simulation, with a growing interest
+      in Medical AI and computer vision, and a long-standing curiosity about quantum mechanics as it applies to
+      computation.
+    </p>
+    <div class="grid sm:grid-cols-3 gap-4 mb-8">
+      <div class="glass rounded-2xl p-5">
+        <h4 class="font-display font-semibold mb-1">Scientific AI</h4>
+        <p class="text-sm text-[var(--text-faint)]">ML for weather prediction, climate modeling, and scientific simulation.</p>
+      </div>
+      <div class="glass rounded-2xl p-5">
+        <h4 class="font-display font-semibold mb-1">Medical AI & Computer Vision</h4>
+        <p class="text-sm text-[var(--text-faint)]">Applying ML to imaging and diagnostics for real clinical impact.</p>
+      </div>
+      <div class="glass rounded-2xl p-5">
+        <h4 class="font-display font-semibold mb-1">Quantum Computing</h4>
+        <p class="text-sm text-[var(--text-faint)]">A long-standing curiosity, sparked by coursework in quantum physics and computation.</p>
+      </div>
+    </div>
+    <p class="text-sm text-[var(--text-faint)] leading-relaxed">
+      I'm currently seeking summer research opportunities at <span class="text-[var(--text)]">IISc Bangalore</span>,
+      prioritizing labs where the work is both scientifically rigorous and practically useful. No publications yet —
+      I'm actively looking for mentorship to start contributing.
+    </p>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="px-6 py-24 max-w-6xl mx-auto">
+  <div class="reveal mb-14">
+    <span class="badge">SKILLS</span>
+    <h2 class="font-display text-3xl sm:text-4xl font-semibold mt-4 tracking-tight">What I build with</h2>
+  </div>
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <div class="reveal glass glass-hover rounded-2xl p-6">
+      <h3 class="font-display font-semibold mb-5 flex items-center gap-2"><span class="grad-text">◆</span> Languages</h3>
+      <div class="space-y-4">
+        <div><div class="flex justify-between text-sm mb-1.5"><span>C</span><span class="text-[var(--text-faint)] font-mono text-xs">Core</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="70"></div></div></div>
+        <div><div class="flex justify-between text-sm mb-1.5"><span>Python</span><span class="text-[var(--text-faint)] font-mono text-xs">Core</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="65"></div></div></div>
+        <div><div class="flex justify-between text-sm mb-1.5"><span>HTML</span><span class="text-[var(--text-faint)] font-mono text-xs">Self-taught</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="60"></div></div></div>
+      </div>
+    </div>
+
+    <div class="reveal glass glass-hover rounded-2xl p-6">
+      <h3 class="font-display font-semibold mb-5 flex items-center gap-2"><span class="grad-text">◆</span> Tools & Platforms</h3>
+      <div class="flex flex-wrap gap-2">
+        <span class="badge">VS Code</span>
+        <span class="badge">GitHub</span>
+        <span class="badge">Netlify</span>
+        <span class="badge">Firebase</span>
+        <span class="badge">Streamlit</span>
+        <span class="badge">Microsoft Excel</span>
+        <span class="badge">Windows</span>
+      </div>
+    </div>
+
+    <div class="reveal glass glass-hover rounded-2xl p-6">
+      <h3 class="font-display font-semibold mb-5 flex items-center gap-2"><span class="grad-text">◆</span> Libraries & Data Processing</h3>
+      <div class="flex flex-wrap gap-2">
+        <span class="badge">PyMuPDF</span>
+        <span class="badge">NLP (rule-based extraction)</span>
+        <span class="badge">Data Processing</span>
+      </div>
+    </div>
+
+    <div class="reveal glass glass-hover rounded-2xl p-6">
+      <h3 class="font-display font-semibold mb-5 flex items-center gap-2"><span class="grad-text">◆</span> Game Dev</h3>
+      <div class="space-y-4">
+        <div><div class="flex justify-between text-sm mb-1.5"><span>Unity + AR Foundation</span><span class="text-[var(--text-faint)] font-mono text-xs">Applied</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="45"></div></div></div>
+      </div>
+      <p class="text-xs text-[var(--text-faint)] mt-4 leading-relaxed">Built and shipped a working AR game with a team of 3, from gameplay design to physics-based mechanics.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="px-6 py-24 max-w-6xl mx-auto">
+  <div class="reveal mb-10">
+    <span class="badge">PROJECTS</span>
+    <h2 class="font-display text-3xl sm:text-4xl font-semibold mt-4 tracking-tight">Things he's shipped</h2>
+  </div>
+
+  <div class="reveal flex flex-wrap gap-2 mb-10" id="project-filters">
+    <button class="filter-btn active glass px-4 py-2 rounded-full text-sm" data-filter="all">All</button>
+    <button class="filter-btn glass px-4 py-2 rounded-full text-sm" data-filter="ai">AI / ML</button>
+    <button class="filter-btn glass px-4 py-2 rounded-full text-sm" data-filter="web">Web / PWA</button>
+    <button class="filter-btn glass px-4 py-2 rounded-full text-sm" data-filter="ar">AR / Unity</button>
+  </div>
+
+  <div class="grid gap-8" id="project-grid">
+
+    <div class="project-card reveal glass glass-hover rounded-3xl p-7 md:p-9" data-cat="ai">
+      <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+        <div>
+          <h3 class="font-display text-2xl font-semibold mb-1">InternLoom AI</h3>
+          <p class="text-[var(--text-faint)] text-sm">AI-powered resume shortlisting engine · built solo at a hackathon</p>
+        </div>
+        <span class="badge">COMPLETE</span>
+      </div>
+      <p class="text-[var(--text-dim)] leading-relaxed mb-5">
+        A solo, AI-assisted recruitment automation platform I built under a hackathon time constraint. It parses PDF
+        resumes, extracts structured candidate profiles, and matches them against job descriptions. Built as a
+        modular pipeline — parsing, information extraction, skill matching, scoring, and reporting — with an
+        interactive Streamlit dashboard that gives recruiters explainable match percentages and missing-skill
+        breakdowns instead of a black-box score.
+      </p>
+      <div class="flex flex-wrap gap-2 mb-5">
+        <span class="badge">Python</span><span class="badge">Streamlit</span><span class="badge">PyMuPDF</span>
+        <span class="badge">NLP</span><span class="badge">Data Processing</span>
+      </div>
+      <div class="flex gap-3">
+        <a href="https://github.com/nrakshith32-web/InternLoom_AI" target="_blank" rel="noopener" class="btn-ghost px-4 py-2 rounded-lg text-sm inline-flex items-center gap-2">GitHub</a>
+        <span class="btn-ghost px-4 py-2 rounded-lg text-sm opacity-60 cursor-not-allowed">Live Demo — Coming Soon</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal glass glass-hover rounded-3xl p-7 md:p-9" data-cat="web">
+      <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+        <div>
+          <h3 class="font-display text-2xl font-semibold mb-1">NexDiary</h3>
+          <p class="text-[var(--text-faint)] text-sm">Private photo & audio journal · offline-first PWA · team project</p>
+        </div>
+        <span class="badge">IN DEVELOPMENT</span>
+      </div>
+      <p class="text-[var(--text-dim)] leading-relaxed mb-5">
+        I worked with a team to build a single-file, installable journaling app that stores everything on-device. It combines photo
+        and audio entries with a Memory Timeline, a Time Capsule for messages to your future self, and a
+        separately PIN-locked Hidden Vault — my answer to the privacy-vs-features tradeoff most cloud
+        journaling apps force on you.
+      </p>
+      <div class="flex flex-wrap gap-2 mb-5">
+        <span class="badge">IndexedDB</span><span class="badge">Web Crypto API</span><span class="badge">MediaRecorder</span>
+        <span class="badge">Service Worker</span><span class="badge">jsPDF</span><span class="badge">PWA</span>
+      </div>
+      <div class="flex gap-3">
+        <span class="btn-ghost px-4 py-2 rounded-lg text-sm opacity-60 cursor-not-allowed">GitHub — Coming Soon</span>
+        <span class="btn-ghost px-4 py-2 rounded-lg text-sm opacity-60 cursor-not-allowed">Live Demo — Coming Soon</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal glass glass-hover rounded-3xl p-7 md:p-9" data-cat="web">
+      <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+        <div>
+          <h3 class="font-display text-2xl font-semibold mb-1">NexNest</h3>
+          <p class="text-[var(--text-faint)] text-sm">Family chore & reward tracker · gamified household app</p>
+        </div>
+        <span class="badge">IN DEVELOPMENT</span>
+      </div>
+      <p class="text-[var(--text-dim)] leading-relaxed mb-5">
+        I built a shared-device app that gives parents an oversight dashboard and kids a game-like loop of
+        chores, points, streaks, and rewards — separate profiles, a sibling leaderboard, and PIN-protected
+        parent controls, all running on plain localStorage with a hand-rolled confetti and transitions engine.
+      </p>
+      <div class="flex flex-wrap gap-2 mb-5">
+        <span class="badge">Vanilla JS</span><span class="badge">localStorage</span><span class="badge">Custom animation engine</span>
+        <span class="badge">4 themes</span>
+      </div>
+      <div class="flex gap-3">
+        <span class="btn-ghost px-4 py-2 rounded-lg text-sm opacity-60 cursor-not-allowed">GitHub — Coming Soon</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal glass glass-hover rounded-3xl p-7 md:p-9" data-cat="ar">
+      <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+        <div>
+          <h3 class="font-display text-2xl font-semibold mb-1">AR Angry Birds</h3>
+          <p class="text-[var(--text-faint)] text-sm">Augmented reality mobile game · Unity + ARCore · team of 3</p>
+        </div>
+        <span class="badge">GAMEPLAY COMPLETE</span>
+      </div>
+      <p class="text-[var(--text-dim)] leading-relaxed mb-5">
+        An AR game my team of 3 and I built, where you place a virtual platform on any real surface, build structures from blocks
+        with different physics (wood, stone, glass), then launch projectiles to knock them down — a hands-on
+        way to explore AR development and game design outside our core stack.
+      </p>
+      <div class="flex flex-wrap gap-2 mb-5">
+        <span class="badge">Unity 2022.3</span><span class="badge">AR Foundation</span><span class="badge">ARCore</span>
+        <span class="badge">C#</span>
+      </div>
+      <div class="flex gap-3">
+        <span class="btn-ghost px-4 py-2 rounded-lg text-sm opacity-60 cursor-not-allowed">GitHub — Coming Soon</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="px-6 py-24 max-w-6xl mx-auto">
+  <div class="reveal mb-14">
+    <span class="badge">EXPERIENCE</span>
+    <h2 class="font-display text-3xl sm:text-4xl font-semibold mt-4 tracking-tight">A builder's journey so far</h2>
+  </div>
+  <div class="relative pl-8">
+    <div class="timeline-line absolute left-[5px] top-2 bottom-2 w-[2px]"></div>
+
+    <div class="reveal relative mb-10">
+      <div class="timeline-node absolute -left-8 top-1.5"></div>
+      <div class="glass glass-hover rounded-2xl p-6">
+        <h3 class="font-display font-semibold mb-1">Independent Product Building</h3>
+        <p class="text-[var(--text-dim)] text-sm leading-relaxed">I designed and shipped four self-directed projects — InternLoom AI, NexDiary, NexNest, and AR Angry Birds — across AI/ML, web, PWA, and Unity/AR, each taken from idea to a working build.</p>
+      </div>
+    </div>
+    <div class="reveal relative mb-10">
+      <div class="timeline-node absolute -left-8 top-1.5"></div>
+      <div class="glass glass-hover rounded-2xl p-6">
+        <h3 class="font-display font-semibold mb-1">InternLoom AI — Hackathon Project <span class="text-[var(--text-faint)] font-normal text-sm">(Solo)</span></h3>
+        <p class="text-[var(--text-dim)] text-sm leading-relaxed">I independently designed and built an AI-assisted resume screening platform under hackathon time constraints, covering resume parsing, candidate information extraction, job-requirement matching, and explainable candidate scoring.</p>
+      </div>
+    </div>
+    <div class="reveal relative mb-10">
+      <div class="timeline-node absolute -left-8 top-1.5"></div>
+      <div class="glass glass-hover rounded-2xl p-6">
+        <h3 class="font-display font-semibold mb-1">Hackathon Participation</h3>
+        <p class="text-[var(--text-dim)] text-sm leading-relaxed">I placed 3rd at SheCodes Hackathon (BMSCE), building a financial wellness dashboard with a team of three under time pressure.</p>
+      </div>
+    </div>
+    <div class="reveal relative">
+      <div class="timeline-node absolute -left-8 top-1.5" style="border-color:var(--panel-border);box-shadow:none;"></div>
+      <div class="glass glass-hover rounded-2xl p-6">
+        <h3 class="font-display font-semibold mb-1">Pursuing Research</h3>
+        <p class="text-[var(--text-dim)] text-sm leading-relaxed">I'm actively reaching out to labs at IISc Bangalore for summer research opportunities in applied ML and computational physics.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS + LEADERSHIP + CERTS -->
+<section class="px-6 py-24 max-w-6xl mx-auto grid md:grid-cols-2 gap-14">
+  <div>
+    <div class="reveal mb-8">
+      <span class="badge">ACHIEVEMENTS</span>
+      <h2 class="font-display text-2xl sm:text-3xl font-semibold mt-4 tracking-tight">Recognition</h2>
+    </div>
+    <div class="reveal glass glass-hover rounded-2xl p-6 mb-6">
+      <div class="flex items-start justify-between gap-3 mb-2">
+        <h3 class="font-display font-semibold">Financial Wellness Platform</h3>
+        <span class="badge">3RD PLACE</span>
+      </div>
+      <p class="text-sm text-[var(--text-faint)] mb-3">SheCodes Hackathon · BMSCE</p>
+      <p class="text-sm text-[var(--text-dim)] leading-relaxed">
+        A hackathon centered on women's empowerment through technology. Built with a team of three: a
+        financial dashboard offering personalized insights, spending analytics, budgeting assistance, and
+        goal tracking through data visualization and behavioral analysis.
+      </p>
+    </div>
+
+    <div class="reveal mb-8 mt-12">
+      <span class="badge">CERTIFICATIONS</span>
+      <h2 class="font-display text-2xl sm:text-3xl font-semibold mt-4 tracking-tight">Learning, formally</h2>
+    </div>
+    <div class="reveal glass glass-hover rounded-2xl p-6">
+      <h3 class="font-display font-semibold mb-1">CodeSprint — Peer-to-Peer Web Development</h3>
+      <p class="text-sm text-[var(--text-faint)]">Google Developer Groups (GDG), BMSCE · March 12, 2026</p>
+    </div>
+  </div>
+
+  <div>
+    <div class="reveal mb-8">
+      <span class="badge">LEADERSHIP & COMMUNITY</span>
+      <h2 class="font-display text-2xl sm:text-3xl font-semibold mt-4 tracking-tight">Beyond the screen</h2>
+    </div>
+    <div class="space-y-4">
+      <div class="reveal glass glass-hover rounded-2xl p-5 flex items-center justify-between gap-3">
+        <div>
+          <h3 class="font-display font-semibold">Art of Living</h3>
+          <p class="text-sm text-[var(--text-faint)]">Volunteer · member since 2017, volunteering since 2022</p>
+        </div>
+      </div>
+      <div class="reveal glass glass-hover rounded-2xl p-5 flex items-center justify-between gap-3">
+        <div>
+          <h3 class="font-display font-semibold">Rotaract Club</h3>
+          <p class="text-sm text-[var(--text-faint)]">Member · since 2025</p>
+        </div>
+      </div>
+      <div class="reveal glass glass-hover rounded-2xl p-5 flex items-center justify-between gap-3">
+        <div>
+          <h3 class="font-display font-semibold">Awaara Running Club</h3>
+          <p class="text-sm text-[var(--text-faint)]">Member · since 2025</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal mt-10">
+      <p class="text-sm text-[var(--text-faint)] mb-2 font-mono">ALSO INTO</p>
+      <div class="flex flex-wrap gap-2">
+        <span class="badge">Meditation</span><span class="badge">Yoga</span><span class="badge">Running</span><span class="badge">Trekking</span>
+        <span class="badge">Sports</span><span class="badge">Reading (non-fiction)</span><span class="badge">Journaling</span>
+        <span class="badge">Music</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section id="references" class="px-6 py-24 max-w-6xl mx-auto">
+  <div class="reveal mb-14">
+    <span class="badge">REFERENCES</span>
+    <h2 class="font-display text-3xl sm:text-4xl font-semibold mt-4 tracking-tight">Who can vouch for me</h2>
+  </div>
+  <div class="reveal glass glass-hover rounded-3xl p-8 md:p-10 max-w-2xl">
+    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+      <div>
+        <h3 class="font-display text-xl font-semibold mb-1">Dr. Chandan</h3>
+        <p class="text-[var(--text-dim)] text-sm">Assistant Professor, Department of Physics</p>
+        <p class="text-[var(--text-faint)] text-sm">B.M.S. College of Engineering (BMSCE), Bengaluru</p>
+      </div>
+      <span class="badge">FACULTY REFERENCE</span>
+    </div>
+    <p class="text-[var(--text-dim)] leading-relaxed mb-5">
+      Ph.D., Bangalore University, completed in collaboration with the Indian Institute of Science (IISc).
+      Specializes in Experimental Nanophysics, Condensed Matter Physics, and Photonics.
+    </p>
+    <div class="flex flex-wrap gap-3 text-sm">
+      <a href="mailto:chandan.phy@bmsce.ac.in" class="btn-ghost px-4 py-2 rounded-lg inline-flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 6l-10 7L2 6"/><path d="M2 6h20v12H2z"/></svg>
+        chandan.phy@bmsce.ac.in
+      </a>
+      <a href="https://bmsce.ac.in/home/facultyProfile/584/DrChandan" target="_blank" rel="noopener" class="btn-ghost px-4 py-2 rounded-lg inline-flex items-center gap-2">
+        Faculty Profile ↗
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="px-6 py-24 max-w-6xl mx-auto">
+  <div class="reveal mb-14 text-center">
+    <span class="badge">CONTACT</span>
+    <h2 class="font-display text-3xl sm:text-4xl font-semibold mt-4 tracking-tight">Let's talk</h2>
+    <p class="text-[var(--text-dim)] mt-3 max-w-xl mx-auto">I'm open to internships, research collaborations, and interesting conversations about ML, physics, or anything you're building.</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-10">
+    <div class="reveal glass rounded-3xl p-8">
+      <form id="contact-form" class="space-y-5">
+        <div>
+          <label class="text-sm text-[var(--text-faint)] font-mono">NAME</label>
+          <input type="text" required class="w-full mt-2 bg-transparent border-b border-[var(--panel-border)] py-2 focus:outline-none focus:border-[var(--accent)] transition-colors" placeholder="Your name">
+        </div>
+        <div>
+          <label class="text-sm text-[var(--text-faint)] font-mono">EMAIL</label>
+          <input type="email" required class="w-full mt-2 bg-transparent border-b border-[var(--panel-border)] py-2 focus:outline-none focus:border-[var(--accent)] transition-colors" placeholder="you@example.com">
+        </div>
+        <div>
+          <label class="text-sm text-[var(--text-faint)] font-mono">MESSAGE</label>
+          <textarea required rows="4" class="w-full mt-2 bg-transparent border-b border-[var(--panel-border)] py-2 focus:outline-none focus:border-[var(--accent)] transition-colors resize-none" placeholder="What's on your mind?"></textarea>
+        </div>
+        <button type="submit" class="btn-primary w-full py-3 rounded-xl text-sm">Send Message</button>
+        <p id="form-status" class="text-sm text-center text-[var(--accent-2)] hidden">Message ready — this form isn't wired to a server yet. Please reach out directly via email for now.</p>
+      </form>
+    </div>
+
+    <div class="reveal flex flex-col gap-4">
+      <a href="mailto:nrakshith32@gmail.com" class="glass glass-hover rounded-2xl p-6 flex items-center gap-4">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--accent-dim);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M22 6l-10 7L2 6"/><path d="M2 6h20v12H2z"/></svg>
+        </div>
+        <div>
+          <p class="font-medium">Email</p>
+          <p class="text-sm text-[var(--text-faint)]">nrakshith32@gmail.com</p>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/rakshith-n-437435403" target="_blank" rel="noopener" class="glass glass-hover rounded-2xl p-6 flex items-center gap-4">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--accent-dim);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="var(--accent)"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2 2 0 1 1 0-4.1 2 2 0 0 1 0 4.1zM7 20.4H3.6V9H7v11.4z"/></svg>
+        </div>
+        <div>
+          <p class="font-medium">LinkedIn</p>
+          <p class="text-sm text-[var(--text-faint)]">/in/rakshith-n-437435403</p>
+        </div>
+      </a>
+      <a href="https://github.com/nrakshith32-web" target="_blank" rel="noopener" class="glass glass-hover rounded-2xl p-6 flex items-center gap-4">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--accent-dim);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="var(--accent)"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5 3.3 9.3 7.9 10.8.6.1.8-.3.8-.6v-2.1c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.4 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2A11.3 11.3 0 0 1 12 5.8c1 0 2.1.1 3 .4 2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12c0-6.3-5.2-11.5-11.5-11.5z"/></svg>
+        </div>
+        <div>
+          <p class="font-medium">GitHub</p>
+          <p class="text-sm text-[var(--text-faint)]">/nrakshith32-web</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="relative px-6 py-10 border-t" style="border-color:var(--panel-border);z-index:1;">
+  <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-[var(--text-faint)] font-mono">© 2026 Rakshith N. Built with intent — and probably a lifetime of edits.</p>
+    <div class="flex gap-5">
+      <a href="mailto:nrakshith32@gmail.com" class="text-[var(--text-faint)] hover:text-[var(--accent)] transition-colors">Email</a>
+      <a href="https://www.linkedin.com/in/rakshith-n-437435403" target="_blank" rel="noopener" class="text-[var(--text-faint)] hover:text-[var(--accent)] transition-colors">LinkedIn</a>
+      <a href="https://github.com/nrakshith32-web" target="_blank" rel="noopener" class="text-[var(--text-faint)] hover:text-[var(--accent)] transition-colors">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top" class="fixed bottom-6 right-6 glass w-11 h-11 rounded-full flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+// Theme toggle
+const themeToggle = document.getElementById('theme-toggle');
+const iconMoon = document.getElementById('icon-moon');
+const iconSun = document.getElementById('icon-sun');
+function setTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  if(t==='light'){iconMoon.classList.add('hidden');iconSun.classList.remove('hidden');}
+  else{iconMoon.classList.remove('hidden');iconSun.classList.add('hidden');}
+}
+let currentTheme = 'dark';
+setTheme(currentTheme);
+themeToggle.addEventListener('click', ()=>{
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  setTheme(currentTheme);
+});
+
+// Mobile menu
+const mobileBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+mobileBtn.addEventListener('click', ()=> mobileMenu.classList.toggle('hidden'));
+document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click', ()=>mobileMenu.classList.add('hidden')));
+
+// Typing effect
+const phrases = ["Always Learning, Always Building", "CS Engineering Student @ BMSCE", "Curious About Code, Physics & the World"];
+const typingEl = document.getElementById('typing-text');
+let pIdx=0, cIdx=0, deleting=false;
+function typeLoop(){
+  const phrase = phrases[pIdx];
+  if(!deleting){
+    typingEl.textContent = phrase.slice(0, cIdx+1);
+    cIdx++;
+    if(cIdx === phrase.length){ deleting=true; setTimeout(typeLoop, 1600); return; }
+  } else {
+    typingEl.textContent = phrase.slice(0, cIdx-1);
+    cIdx--;
+    if(cIdx===0){ deleting=false; pIdx=(pIdx+1)%phrases.length; }
+  }
+  setTimeout(typeLoop, deleting ? 35 : 55);
+}
+typeLoop();
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:0.12});
+revealEls.forEach(el=>io.observe(el));
+
+// Skill bars animate on reveal
+const skillBars = document.querySelectorAll('.skill-bar-fill');
+const skillIo = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.width = e.target.dataset.width + '%';
+      skillIo.unobserve(e.target);
+    }
+  });
+},{threshold:0.4});
+skillBars.forEach(b=>skillIo.observe(b));
+
+// Active section nav highlighting
+const navLinks = document.querySelectorAll('.nav-link[data-nav]');
+const sections = Array.from(navLinks).map(l => document.getElementById(l.dataset.nav)).filter(Boolean);
+const navSpy = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const link = document.querySelector('.nav-link[data-nav="' + entry.target.id + '"]');
+    if (!link) return;
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+sections.forEach(s => navSpy.observe(s));
+
+// Scroll progress + back to top
+const progressBar = document.getElementById('scroll-progress');
+const backToTop = document.getElementById('back-to-top');
+window.addEventListener('scroll', ()=>{
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  progressBar.style.width = scrolled + '%';
+  if(h.scrollTop > 600){ backToTop.style.opacity='1'; backToTop.style.pointerEvents='auto'; }
+  else{ backToTop.style.opacity='0'; backToTop.style.pointerEvents='none'; }
+});
+backToTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+// Cursor glow
+const glow = document.getElementById('cursor-glow');
+window.addEventListener('mousemove', (e)=>{
+  glow.style.left = e.clientX + 'px';
+  glow.style.top = e.clientY + 'px';
+});
+
+// Project filter
+const filterBtns = document.querySelectorAll('.filter-btn');
+const projectCards = document.querySelectorAll('.project-card');
+filterBtns.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    filterBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    projectCards.forEach(c=>{
+      c.style.display = (f==='all' || c.dataset.cat===f) ? '' : 'none';
+    });
+  });
+});
+
+// Contact form (no backend — just acknowledges)
+document.getElementById('contact-form').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  document.getElementById('form-status').classList.remove('hidden');
+});
+
+// Constellation canvas background
+const canvas = document.getElementById('constellation');
+const ctx = canvas.getContext('2d');
+let w, h, stars = [];
+function resize(){
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = document.documentElement.scrollHeight;
+}
+function initStars(){
+  const count = Math.floor((w*h)/22000);
+  stars = Array.from({length: Math.min(count, 140)}, ()=>({
+    x: Math.random()*w,
+    y: Math.random()*h,
+    r: Math.random()*1.4+0.4,
+    vx: (Math.random()-0.5)*0.06,
+    vy: (Math.random()-0.5)*0.06
+  }));
+}
+function getAccentColor(){
+  return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+}
+function draw(){
+  ctx.clearRect(0,0,w,h);
+  const accent = getAccentColor();
+  ctx.fillStyle = accent;
+  for(const s of stars){
+    s.x += s.vx; s.y += s.vy;
+    if(s.x<0) s.x=w; if(s.x>w) s.x=0;
+    if(s.y<0) s.y=h; if(s.y>h) s.y=0;
+    ctx.globalAlpha = 0.5;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    ctx.fill();
+  }
+  ctx.strokeStyle = accent;
+  for(let i=0;i<stars.length;i++){
+    for(let j=i+1;j<stars.length;j++){
+      const dx = stars[i].x-stars[j].x, dy = stars[i].y-stars[j].y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist < 110){
+        ctx.globalAlpha = (1 - dist/110) * 0.15;
+        ctx.beginPath();
+        ctx.moveTo(stars[i].x, stars[i].y);
+        ctx.lineTo(stars[j].x, stars[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(draw);
+}
+resize(); initStars(); draw();
+window.addEventListener('resize', ()=>{ resize(); initStars(); });
+
+// Smooth anchor scroll offset compensation not needed due to scroll-behavior:smooth
+</script>
+</body>
+</html>
